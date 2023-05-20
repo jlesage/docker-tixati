@@ -1,0 +1,91 @@
+---
+
+#
+# Definitions for Tixati docker container.
+#
+# This file is used as data source to generate README.md and unRAID template files
+# from Jinja2 templates.
+#
+
+app:
+  id: 24
+  name: tixati
+  friendly_name: Tixati
+  gui_type: x11
+  project:
+    description: |-
+      Tixati is a peer-to-peer file sharing program that uses the popular BitTorrent
+      protocol.
+    url: https://www.tixati.com
+  unraid:
+    support_url: https://forums.unraid.net/topic/139447-support-tixati/
+    category: "Downloaders:"
+  documentation:
+  changelog:
+    - version: 23.05.1
+      date: 2023-05-19
+      changes:
+        - 'Initial release.'
+
+container:
+  unsupported_volume:
+    - /storage
+
+  # Environment variables.
+  environment_variables: []
+
+  # Volumes
+  volumes:
+    - container_path: /output
+      host_path_example: /home/user/Downloads
+      description: >-
+        This is where downloaded files are stored.
+      permissions: rw
+      include_in_quick_start: true
+      unraid_template:
+        title: Output Directory
+        description: >-
+          This is the default output folder for downloaded files.
+        display: advanced-hide
+        required: true
+        mask: false
+
+  # Network ports
+  ports:
+    - number: 17844
+      protocol: tcp
+      description: >-
+        Port used for incoming peer connections.  **NOTE**:  Your router should
+        be configured to forward this port to this container. **NOTE**: This
+        port is configurable from Tixati.
+      mandatory: false
+      include_in_quick_start: true
+      unraid_template:
+        title: Incoming Peer Connections Port
+        description: >-
+          Port used for incoming peer connections.  NOTE: Your router should be
+          configured to forward this port to this container.
+        default: 17844
+        display: advanced
+        required: false
+        mask: false
+    - number: 17844
+      protocol: udp
+      description: >-
+        Port used for incoming DHT messages. **NOTE**: Your router should be
+        configured to forward this port to this container.  **NOTE**: This port
+        is configurable from Tixati.
+      mandatory: false
+      include_in_quick_start: true
+      unraid_template:
+        title: Incoming DHT Messages Port
+        description: >-
+          Port used for incoming DHT messages.  NOTE: Your router should be
+          configured to forward this port to this container.
+        default: 17844
+        display: advanced
+        required: false
+        mask: false
+
+  # Devices
+  devices: []
