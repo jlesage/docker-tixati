@@ -31,8 +31,8 @@ Launch the Tixati docker container with the following command:
 docker run -d \
     --name=tixati \
     -p 5800:5800 \
-    -p 17844:17844 \
-    -p 17844:17844 \
+    -p 17844:17844/tcp \
+    -p 17844:17844/udp \
     -v /docker/appdata/tixati:/config:rw \
     -v /home/user/Downloads:/output:rw \
     jlesage/tixati
