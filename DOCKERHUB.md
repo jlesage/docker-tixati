@@ -23,8 +23,9 @@ protocol.
 
 ## Quick Start
 
-**NOTE**: The Docker command provided in this quick start is given as an example
-and parameters should be adjusted to your need.
+**NOTE**:
+    The Docker command provided in this quick start is given as an example
+    and parameters should be adjusted to your need.
 
 Launch the Tixati docker container with the following command:
 ```shell
@@ -39,6 +40,7 @@ docker run -d \
 ```
 
 Where:
+
   - `/docker/appdata/tixati`: This is where the application stores its configuration, states, log and any files needing persistency.
   - `/home/user/Downloads`: This is where downloaded files are stored.
 
