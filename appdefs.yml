@@ -12,6 +12,7 @@ app:
   name: tixati
   friendly_name: Tixati
   gui_type: x11
+  base_os: alpine
   project:
     description: |-
       Tixati is a peer-to-peer file sharing program that uses the popular BitTorrent
