@@ -8,6 +8,7 @@ mkdir -p "$XDG_CONFIG_HOME"/tixati
 
 # Install default configuration.
 [ -f "$XDG_CONFIG_HOME"/tixati/settings2.dat ] || cp /defaults/settings2.dat "$XDG_CONFIG_HOME"/tixati/settings2.dat
+[ -f "$XDG_CONFIG_HOME"/tixati/colors2.dat ] || cp /defaults/colors2.dat "$XDG_CONFIG_HOME"/tixati/colors2.dat
 
 # Take ownership of the output directory.
 take-ownership --not-recursive /output
