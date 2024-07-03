@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# When receiving SIGTERM, Tixati quit without saving the configuration. Thus,
+# use a window close event.
+#
+
+set -e # Exit immediately if a command exits with a non-zero status.
+set -u # Treat unset variables as an error.
+
+PID="$1"
+
+/opt/tixati/bin/xdo close -c
+for i in $(seq 1 20)
+do
+    STATE="$(cat /proc/$PID/stat 2>/dev/null | cut -d' ' -f3)"
+    if [ -z "$STATE" ] || [ "$STATE" = "Z" ]; then
+        break
+    fi
+    sleep 0.25
+done
+
+# vim:ft=sh:ts=4:sw=4:et:sts=4
+
