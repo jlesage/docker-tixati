@@ -35,7 +35,6 @@ apt-get install -y --no-install-recommends \
     libdbus-glib-1-2 \
     librsvg2-common \
     adwaita-icon-theme-full \
-    xdo \
 
 # Generate locale.
 locale-gen en_US.UTF-8
@@ -46,9 +45,6 @@ mkdir -p "$TIXATI_INSTALL_DIR"/lib
 
 log "Downloading Tixati..."
 curl -# -L -f ${TIXATI_URL} | tar xz --wildcards --no-anchored --strip 1 -C "$TIXATI_INSTALL_DIR"/bin "*/tixati"
-
-# Copy xdo used to terminate Tixati.
-cp -v /usr/bin/xdo "$TIXATI_INSTALL_DIR"/bin/
 
 # Define extra libraries that are needed.  These libraries are loaded
 # dynamically (dlopen) and are not catched by tracking dependencies.
