@@ -23,6 +23,10 @@ app:
     category: "Downloaders:"
   documentation:
   changelog:
+    - version: 24.07.2
+      date: 2024-07-24
+      changes:
+        - 'Updated Tixati to version 3.28.'
     - version: 24.07.1
       date: 2024-07-03
       changes:
