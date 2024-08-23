@@ -1,0 +1,85 @@
+name: Update_Tixati_Version
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Get current Tixati version
+        run: |
+          current_version=$(grep 'ARG TIXATI_VERSION=' Dockerfile | cut -d'=' -f2)
+          echo "CURRENT_VERSION=${current_version}" >> $GITHUB_ENV
+
+      - name: Get latest Tixati version
+        run: |
+          latest_version=$(curl -s https://www.tixati.com/download/linux.html | grep -oP 'Download Tixati v\K[0-9.]+' | head -n 1)
+          echo "LATEST_VERSION=${latest_version}" >> $GITHUB_ENV
+
+      - name: Check if update is needed
+        run: |
+          if [ "${{ env.CURRENT_VERSION }}" != "${{ env.LATEST_VERSION }}" ]; then
+            echo "UPDATE_NEEDED=true" >> $GITHUB_ENV
+          fi
+
+      - name: Update Dockerfile
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        run: |
+          sed -i "s/ARG TIXATI_VERSION=.*/ARG TIXATI_VERSION=${{ env.LATEST_VERSION }}/" Dockerfile
+
+      - name: Create Version Tag
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        run: |
+          current_month=$(date +'%y.%m')
+          current_tag=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | grep -oP '"tag_name": "v\K[0-9.]+' | head -n 1)
+          if [[ "$current_tag" == "$current_month"* ]]; then
+            new_tag="${current_tag%.*}.$((${current_tag##*.} + 1))"
+          else
+            new_tag="${current_month}.1"
+          fi
+          echo "NEW_TAG=${new_tag}" >> $GITHUB_ENV
+
+      - name: Update appdefs.yml
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        run: |
+          current_date=$(date +'%Y-%m-%d')
+          new_changelog="- version: ${{ env.NEW_TAG }}\n      date: ${current_date}\n      changes:\n        - 'Updated Tixati to version ${{ env.LATEST_VERSION }}.'"
+          sed -i "s/changelog:/changelog:\n    $new_changelog/" appdefs.yml
+
+      - name: Commit changes
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Dockerfile appdefs.yml
+          git commit -m "Update Tixati to version ${{ env.LATEST_VERSION }}"
+          git push
+
+      - name: Create Release
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: v${{ env.NEW_TAG }}
+          name: Version ${{ env.NEW_TAG }}
+          body: |
+            Changes in this release:
+            - Updated Tixati to version ${{ env.LATEST_VERSION }}.
+
+      - name: Trigger
+        if: ${{ env.UPDATE_NEEDED == 'true' }}
+        uses: peter-evans/repository-dispatch@main
+        with:
+          event-type: Trig
+
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          keep_minimum_runs: 0
+          retain_days: 0
+          delete_workflow_pattern: Update_Tixati_Version
