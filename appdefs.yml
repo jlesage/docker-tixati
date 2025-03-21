@@ -23,6 +23,10 @@ app:
     category: "Downloaders:"
   documentation:
   changelog:
+    - version: 25.03.1
+      date: 2025-03-21
+      changes:
+        - 'Updated Tixati to version 3.33.'
     - version: 25.02.1
       date: 2025-02-09
       changes:
