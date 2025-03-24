@@ -9,6 +9,7 @@ env:
   PLATFORMS: linux/amd64
 
 on:
+  repository_dispatch:
   push:
     branches: '*'
     tags:
