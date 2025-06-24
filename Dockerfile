@@ -8,7 +8,7 @@
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG TIXATI_VERSION=3.33
+ARG TIXATI_VERSION=3.35
 
 # Define software download URLs.
 ARG TIXATI_URL=https://download.tixati.com/tixati-${TIXATI_VERSION}-1.x86_64.manualinstall.tar.gz
