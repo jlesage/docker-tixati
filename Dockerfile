@@ -20,7 +20,7 @@ COPY src/tixati /build
 RUN /build/build.sh "$TIXATI_URL"
 
 # Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.18-v4.8.1
+FROM jlesage/baseimage-gui:alpine-3.18-v4.8.2
 
 ARG TIXATI_VERSION
 ARG DOCKER_IMAGE_VERSION
