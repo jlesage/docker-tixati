@@ -11,6 +11,6 @@ mkdir -p "$XDG_CONFIG_HOME"/tixati
 [ -f "$XDG_CONFIG_HOME"/tixati/colors2.dat ] || cp /defaults/colors2.dat "$XDG_CONFIG_HOME"/tixati/colors2.dat
 
 # Take ownership of the output directory.
-take-ownership --not-recursive /output
+take-ownership --not-recursive --skip-if-writable /output
 
 # vim:ft=sh:ts=4:sw=4:et:sts=4
