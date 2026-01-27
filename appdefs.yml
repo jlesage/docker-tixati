@@ -179,8 +179,6 @@ container:
       include_in_quick_start: true
       unraid_template:
         title: Output Directory
-        description: >-
-          This is the default output folder for downloaded files.
         display: advanced-hide
         required: true
         mask: false
@@ -190,7 +188,7 @@ container:
     - number: 17844
       protocol: tcp
       description: >-
-        Port used for incoming peer connections.  **NOTE**:  Your router should
+        Port used for incoming peer connections. **NOTE**: Your router should
         be configured to forward this port to this container. **NOTE**: This
         port is configurable from Tixati.
       mandatory: false
@@ -198,7 +196,7 @@ container:
       unraid_template:
         title: Incoming Peer Connections Port
         description: >-
-          Port used for incoming peer connections.  NOTE: Your router should be
+          Port used for incoming peer connections. NOTE: Your router should be
           configured to forward this port to this container.
         default: 17844
         display: advanced
@@ -208,14 +206,14 @@ container:
       protocol: udp
       description: >-
         Port used for incoming DHT messages. **NOTE**: Your router should be
-        configured to forward this port to this container.  **NOTE**: This port
+        configured to forward this port to this container. **NOTE**: This port
         is configurable from Tixati.
       mandatory: false
       include_in_quick_start: true
       unraid_template:
         title: Incoming DHT Messages Port
         description: >-
-          Port used for incoming DHT messages.  NOTE: Your router should be
+          Port used for incoming DHT messages. NOTE: Your router should be
           configured to forward this port to this container.
         default: 17844
         display: advanced
