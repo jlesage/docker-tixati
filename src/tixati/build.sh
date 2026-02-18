@@ -10,7 +10,7 @@ SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 TIXATI_ROOTFS=/tmp/tixati-rootfs
 TIXATI_INSTALL_DIR=/opt/tixati
 
-function log {
+log() {
     echo ">>> $*"
 }
 
